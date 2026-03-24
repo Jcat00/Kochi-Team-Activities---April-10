@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f8; color: #1a1a18; padding: 1rem; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 1rem 0; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+  .tab { flex: 1; padding: 12px 10px; border-radius: 12px; border: 2px solid transparent; background: #f0f0ee; cursor: pointer; font-size: 12px; font-weight: 600; color: #999; text-align: center; transition: all .2s; line-height: 1.4; letter-spacing: 0.01em; user-select: none; }
+  .tab:hover { border-color: #ccc; color: #666; transform: translateY(-1px); }
+  .tab .tab-letter { display: block; font-size: 18px; font-weight: 700; margin-bottom: 3px; opacity: 0.35; transition: opacity .2s; }
+  .tab.active-a { background: #FEF3E0; border-color: #BA7517; color: #6B3D09; box-shadow: 0 2px 10px rgba(186,117,23,0.18); transform: translateY(-2px); }
+  .tab.active-a .tab-letter { opacity: 1; color: #BA7517; }
+  .tab.active-b { background: #E0F7EF; border-color: #1D9E75; color: #064033; box-shadow: 0 2px 10px rgba(29,158,117,0.18); transform: translateY(-2px); }
+  .tab.active-b .tab-letter { opacity: 1; color: #1D9E75; }
+  .tab.active-c { background: #EEEDFE; border-color: #7F77DD; color: #2E2880; box-shadow: 0 2px 10px rgba(127,119,221,0.18); transform: translateY(-2px); }
+  .tab.active-c .tab-letter { opacity: 1; color: #7F77DD; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .why-box { border-radius: 10px; border: 1px solid #e5e5e3; padding: 12px 14px; margin-bottom: 14px; background: #fff; }
+  .why-title { font-size: 12px; font-weight: 500; color: #666; margin-bottom: 7px; }
+  .why-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .work-banner { display: flex; align-items: center; gap: 10px; padding: 10px 13px; border-radius: 8px; border: 1px dashed #ccc; margin-bottom: 10px; font-size: 12px; color: #666; background: #fff; }
+  .block { display: flex; gap: 13px; margin-bottom: 9px; position: relative; }
+  .block:not(:last-child)::after { content: ''; position: absolute; left: 41px; top: 56px; width: 2px; height: calc(100% - 9px); background: #e5e5e3; }
+  .time-col { min-width: 76px; text-align: right; padding-top: 14px; font-size: 12px; color: #888; font-weight: 500; line-height: 1.2; }
+  .dot-col { display: flex; flex-direction: column; align-items: center; padding-top: 17px; z-index: 1; }
+  .dot { width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0; }
+  .card { flex: 1; border-radius: 10px; border: 1px solid #e5e5e3; padding: 11px 13px; background: #fff; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; gap: 8px; }
+  .card-title { font-size: 13px; font-weight: 500; color: #1a1a18; }
+  .card-title a { color: inherit; text-decoration: none; border-bottom: 1px dashed currentColor; }
+  .card-title a:hover { opacity: 0.7; }
+  .badge { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+  .card-sub { font-size: 12px; color: #666; line-height: 1.5; }
+  .card-tip { font-size: 11px; color: #999; margin-top: 4px; border-left: 2px solid #e0e0de; padding-left: 7px; }
+  .tag { font-size: 11px; border-radius: 4px; padding: 2px 6px; font-weight: 500; margin-top: 5px; display: inline-block; margin-right: 4px; }
+  .cost-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding: 11px 13px; border-radius: 8px; background: #fff; border: 1px solid #e5e5e3; }
+  .cost-label { font-size: 12px; color: #666; }
+  .cost-val { font-size: 14px; font-weight: 500; color: #1a1a18; }
+  .cost-note { font-size: 11px; color: #999; margin-top: 2px; }
+  .tag-green { background: #e6f4ed; color: #1a7a4a; }
+  .tag-blue { background: #e6f0fb; color: #1a4fa0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs">
+    <div class="tab active-a" onclick="show('a')"><span class="tab-letter">A</span>Go-kart + rage room</div>
+    <div class="tab" id="tab-b" onclick="show('b')"><span class="tab-letter">B</span>Bowling + backwater</div>
+    <div class="tab" id="tab-c" onclick="show('c')"><span class="tab-letter">C</span>Bowling + rage room</div>
+  </div>
+
+  <!-- OPTION A -->
+  <div class="panel active" id="panel-a">
+    <div class="why-box">
+      <div class="why-title">High energy all the way · 100% indoors</div>
+      <div class="why-pills">
+        <span class="pill" style="background:#E1F5EE;color:#085041">Lunch</span>
+        <span class="pill" style="background:#FAEEDA;color:#854F0B">Go-karting</span>
+        <span class="pill" style="background:#EEEDFE;color:#3C3489">Rage room</span>
+        <span class="pill" style="background:#FAECE7;color:#993C1D">BBQ Nation</span>
+      </div>
+    </div>
+    <div class="work-banner">💼 <span><strong style="color:#1a1a18">9:00 AM – 2:00 PM</strong> &nbsp;·&nbsp; Work session at new Edappally office</span></div>
+
+    <div class="block">
+      <div class="time-col">2:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#0F6E56"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Lunch — <a href="https://www.zomato.com/kochi/hidden-edappally" target="_blank">hidDen Café</a></span><span class="badge" style="background:#E1F5EE;color:#0F6E56">₹400–₹700</span></div>
+        <div class="card-sub">First shared meal. Relaxed and cozy — right warm-up before the high-energy afternoon.</div>
+        <div class="card-tip">📍 Koonamthai, Edappally · 5 min from office</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">3:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#BA7517"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Go-karting — <a href="https://speedwaykochi.com" target="_blank">Speedway Kochi</a> ⭐ 4.5</span><span class="badge" style="background:#FAEEDA;color:#BA7517">₹500–₹800</span></div>
+        <div class="card-sub">Indoor track at Grand Mall, 5 min away. Team heats, leaderboard, bragging rights. The fastest icebreaker money can buy.</div>
+        <div class="card-tip">📍 Grand Mall, Edappally · +91 94959 97226 · Book group slot</div>
+        <span class="tag tag-green">Indoors · AC</span>
+        <span class="tag tag-blue">Top icebreaker</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">5:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#533490"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title"><a href="https://breaknchill.co.in" target="_blank">Break n Chill</a> — rage room + gamers lounge ⭐ 4.8</span><span class="badge" style="background:#EEEDFE;color:#3C3489">₹400–₹600</span></div>
+        <div class="card-sub">Smash things in the rage room — therapeutic and hilarious. Wind down in the gamers lounge after. Safe, fun, great for groups.</div>
+        <div class="card-tip">📍 Infopark, Kakkanad · ~20 min drive · +91 88483 18855</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">7:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#993C1D"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Dinner — <a href="https://www.barbequenation.com/restaurants/MgRoad" target="_blank">Barbeque Nation</a> ⭐ 4.3</span><span class="badge" style="background:#FAECE7;color:#993C1D">₹1,000–₹1,200</span></div>
+        <div class="card-sub">Unlimited live grill buffet to close the day. The table grill keeps everyone engaged — perfect for a team that's already warmed up and laughing.</div>
+        <div class="card-tip">📍 Imperial Trade Center, MG Road · +91 70242 53651 · Reserve in advance</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">~9:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#444441"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Wrap up</span><span class="badge" style="background:#F1EFE8;color:#444441">End of day</span></div>
+        <div class="card-sub">Team heads home from MG Road.</div>
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div><div class="cost-label">Estimated total per person</div><div class="cost-note">2:00 PM – 9:30 PM · fully indoors</div></div>
+      <div style="text-align:right"><div class="cost-val">₹2,300 – ₹3,300</div><div class="cost-note">Most budget-friendly</div></div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="panel" id="panel-b">
+    <div class="why-box">
+      <div class="why-title">Social → Calm → Celebratory · CEO's backwater pick</div>
+      <div class="why-pills">
+        <span class="pill" style="background:#E1F5EE;color:#085041">Lunch</span>
+        <span class="pill" style="background:#EEEDFE;color:#3C3489">Bowling</span>
+        <span class="pill" style="background:#E1F5EE;color:#085041">Backwater cruise</span>
+        <span class="pill" style="background:#FAECE7;color:#993C1D">BBQ Nation</span>
+      </div>
+    </div>
+    <div class="work-banner">💼 <span><strong style="color:#1a1a18">9:00 AM – 2:00 PM</strong> &nbsp;·&nbsp; Work session at new Edappally office</span></div>
+
+    <div class="block">
+      <div class="time-col">2:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#0F6E56"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Lunch — <a href="https://www.zomato.com/kochi/hidden-edappally" target="_blank">hidDen Café</a></span><span class="badge" style="background:#E1F5EE;color:#0F6E56">₹400–₹700</span></div>
+        <div class="card-sub">First shared meal. Easy, relaxed — sets the social tone for the whole afternoon.</div>
+        <div class="card-tip">📍 Koonamthai, Edappally · 5 min from office</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">3:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#534AB7"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Bowling — <a href="https://funtura.in/attractions/bowling-2/" target="_blank">Funtura, LuLu Mall</a> ⭐ 4.2</span><span class="badge" style="background:#EEEDFE;color:#3C3489">₹400–₹700</span></div>
+        <div class="card-sub">12-lane bowling alley right at Edappally Junction — the most social lane-sport there is. Teams naturally cheer, compete and bond without it feeling forced. Relaxed enough energy that the transition to the backwaters feels smooth and natural.</div>
+        <div class="card-tip">📍 LuLu Mall, Edappally Junction · +91 484 272 8000 · Book lanes in advance</div>
+        <span class="tag tag-green">Indoors · AC</span>
+        <span class="tag tag-blue">Perfect vibe shift before the water</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">5:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#085041"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title"><a href="https://www.kochibackwaters.org" target="_blank">Backwater cruise</a> — evening shikara ⭐ 4.8</span><span class="badge" style="background:#E1F5EE;color:#0F6E56">₹500–₹900</span></div>
+        <div class="card-sub">Private shikara through the Kochi backwaters at dusk. After a relaxed bowling session the team is already loose and talking — the calm of the water and Kerala snacks onboard makes this the highlight of the day. April evenings here are stunning. CEO's pick.</div>
+        <div class="card-tip">📍 Nettoor, Panangad · ~20 min from LuLu Mall · +91 98460 93939 · Book in advance</div>
+        <span class="tag" style="background:#FAEEDA;color:#854F0B">Outdoor · cool evening breeze</span>
+        <span class="tag tag-blue">CEO's pick</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">8:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#993C1D"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Dinner — <a href="https://www.barbequenation.com/restaurants/MgRoad" target="_blank">Barbeque Nation</a> ⭐ 4.3</span><span class="badge" style="background:#FAECE7;color:#993C1D">₹1,000–₹1,200</span></div>
+        <div class="card-sub">The perfect landing after a serene evening on the water — lively, unlimited live grill, great energy to close the night on. MG Road is about 20 min from Nettoor. Reserve the 8 PM slot.</div>
+        <div class="card-tip">📍 Imperial Trade Center, MG Road · +91 70242 53651 · Reserve 8 PM slot</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">~10:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#444441"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Wrap up</span><span class="badge" style="background:#F1EFE8;color:#444441">End of day</span></div>
+        <div class="card-sub">Team heads home from MG Road — a perfectly paced day.</div>
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div><div class="cost-label">Estimated total per person</div><div class="cost-note">2:00 PM – 10:00 PM · mixed format</div></div>
+      <div style="text-align:right"><div class="cost-val">₹2,300 – ₹3,600</div><div class="cost-note">CEO's pick · best flow</div></div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="panel" id="panel-c">
+    <div class="why-box">
+      <div class="why-title">Social → Stress-busting → Celebratory · 100% indoors</div>
+      <div class="why-pills">
+        <span class="pill" style="background:#E1F5EE;color:#085041">Lunch</span>
+        <span class="pill" style="background:#EEEDFE;color:#3C3489">Bowling</span>
+        <span class="pill" style="background:#EEEDFE;color:#533490">Rage room</span>
+        <span class="pill" style="background:#FAECE7;color:#993C1D">BBQ Nation</span>
+      </div>
+    </div>
+    <div class="work-banner">💼 <span><strong style="color:#1a1a18">9:00 AM – 2:00 PM</strong> &nbsp;·&nbsp; Work session at new Edappally office</span></div>
+
+    <div class="block">
+      <div class="time-col">2:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#0F6E56"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Lunch — <a href="https://www.zomato.com/kochi/hidden-edappally" target="_blank">hidDen Café</a></span><span class="badge" style="background:#E1F5EE;color:#0F6E56">₹400–₹700</span></div>
+        <div class="card-sub">First shared meal. Relaxed and cozy — the right transition from work into play.</div>
+        <div class="card-tip">📍 Koonamthai, Edappally · 5 min from office</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">3:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#534AB7"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Bowling — <a href="https://funtura.in/attractions/bowling-2/" target="_blank">Funtura, LuLu Mall</a> ⭐ 4.2</span><span class="badge" style="background:#EEEDFE;color:#3C3489">₹400–₹700</span></div>
+        <div class="card-sub">12-lane bowling at LuLu Mall — social, fun, and naturally competitive without being exhausting. Cheering each other across lanes is a gentle but effective icebreaker for a new team.</div>
+        <div class="card-tip">📍 LuLu Mall, Edappally Junction · +91 484 272 8000 · Book lanes in advance</div>
+        <span class="tag tag-green">Indoors · AC</span>
+        <span class="tag tag-blue">Gentle icebreaker</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">5:00<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#533490"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title"><a href="https://breaknchill.co.in" target="_blank">Break n Chill</a> — rage room + gamers lounge ⭐ 4.8</span><span class="badge" style="background:#EEEDFE;color:#3C3489">₹400–₹600</span></div>
+        <div class="card-sub">From relaxed bowling straight into smashing things — the contrast is what makes it funny. Watching teammates go wild in the rage room is bonding gold. Gamers lounge to wind down after.</div>
+        <div class="card-tip">📍 Infopark, Kakkanad · ~20 min drive · +91 88483 18855</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">7:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#993C1D"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Dinner — <a href="https://www.barbequenation.com/restaurants/MgRoad" target="_blank">Barbeque Nation</a> ⭐ 4.3</span><span class="badge" style="background:#FAECE7;color:#993C1D">₹1,000–₹1,200</span></div>
+        <div class="card-sub">Unlimited live grill buffet to close the day. Everyone's hungry, everyone's laughing — BBQ Nation is the perfect finish.</div>
+        <div class="card-tip">📍 Imperial Trade Center, MG Road · +91 70242 53651 · Reserve in advance</div>
+        <span class="tag tag-green">Indoors · AC</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="time-col">~9:30<br>PM</div>
+      <div class="dot-col"><div class="dot" style="background:#444441"></div></div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Wrap up</span><span class="badge" style="background:#F1EFE8;color:#444441">End of day</span></div>
+        <div class="card-sub">Team heads home from MG Road.</div>
+      </div>
+    </div>
+
+    <div class="cost-row">
+      <div><div class="cost-label">Estimated total per person</div><div class="cost-note">2:00 PM – 9:30 PM · fully indoors</div></div>
+      <div style="text-align:right"><div class="cost-val">₹2,200 – ₹3,200</div><div class="cost-note">Most relaxed · fully indoors</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    ['a','b','c'].forEach(x => {
+      document.getElementById('panel-' + x).classList.remove('active');
+      document.querySelectorAll('.tab')[['a','b','c'].indexOf(x)].className = 'tab';
+    });
+    document.getElementById('panel-' + id).classList.add('active');
+    document.querySelectorAll('.tab')[['a','b','c'].indexOf(id)].className = 'tab active-' + id;
+  }
+</script>
+</body>
+</html>
